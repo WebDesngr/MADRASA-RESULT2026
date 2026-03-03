@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Noor Madrasa Exam Result 2026</title>
+    <style>
+        /* Simple and Clean CSS Styling */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            margin: 0;
+            /* Added padding and changed alignment so long pages scroll normally */
+            padding: 40px 20px; 
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; 
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+
+        .container {
+            background-color: #ffffff;
+            padding: 30px 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 450px;
+            text-align: center;
+        }
+
+        h2 {
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+
+        p.subtitle {
+            color: #7f8c8d;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #34495e;
+            font-weight: bold;
+        }
+
+        select, input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #bdc3c7;
+            border-radius: 5px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+
+        /* Error message styling */
+        .error-text {
+            color: #e74c3c;
+            font-size: 13px;
+            margin-top: 5px;
+            display: none; /* Hidden by default */
+            font-weight: bold;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #27ae60;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #2ecc71;
+        }
+
+        /* Styling for the Result Section (Hidden by default) */
+        #result-section {
+            display: none; 
+        }
+
+        .result-card {
+            background-color: #ecf0f1;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .result-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+
+        /* Natural Table Styling (No inner scrollbar) */
+        .table-container {
+            border: 1px solid #bdc3c7;
+            border-radius: 5px;
+            background-color: #fff;
+            overflow: hidden; /* Keeps the rounded corners neat */
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ecf0f1;
+            font-size: 14px;
+        }
+
+        th {
+            background-color: #34495e;
+            color: white;
+            /* Removed the sticky positioning so it scrolls up naturally */
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9; 
+        }
+
+        .btn-back {
+            background-color: #e74c3c;
+        }
+
+        .btn-back:hover {
+            background-color: #c0392b;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <div id="search-section">
+            <h2>Noor Madrasa</h2>
+            <p class="subtitle">Annual Exam Result 2026</p>
+
+            <form id="resultForm">
+                <div class="form-group">
+                    <label for="classSelect">Select Class:</label>
+                    <select id="classSelect" required>
+                        <option value="" disabled selected>-- Choose Class --</option>
+                        <option value="1">Class 1</option>
+                        <option value="2">Class 2</option>
+                        <option value="3">Class 3</option>
+                        <option value="4">Class 4</option>
+                        <option value="6">Class 6</option>
+                        <option value="8">Class 8</option>
+                        <option value="9">Class 9</option>
+                        <option value="11">Class 11</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="madrasaCode">Madrasa Code:</label>
+                    <input type="text" id="madrasaCode" placeholder="Enter Code" required>
+                    <div id="codeError" class="error-text">Invalid Madrasa Code! Please try again.</div>
+                </div>
+
+                <button type="submit">View Result</button>
+            </form>
+        </div>
+
+        <div id="result-section">
+            <h2>Passed Students List</h2>
+            <p class="subtitle">Academic Year 2026</p>
+
+            <div class="result-card">
+                <div class="result-info">
+                    <span><strong>Class:</strong> <span id="displayClass"></span></span>
+                    <span><strong>Code:</strong> <span id="displayCode"></span></span>
+                </div>
+                
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th style="width: 20%;">Sl No.</th>
+                                <th>Student Name</th>
+                            </tr>
+                        </thead>
+                        <tbody id="studentsBody">
+                            </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <button type="button" class="btn-back" onclick="goBack()">Search Again</button>
+        </div>
+
+    </div>
+
+    <script>
+        const studentsData = {
+            "1": ["Adam riyas KT", "Al ameen MM", "Al ameen KM", "Dhanish Musthafa", "Muhammed Shahid P", "Muhammed Jubair P", "Muhammed AP", "Misyan PC", "Salman P", "Mehsa Fathima PP", "Marsiya Fathima AK", "Fathima Salwa MK", "Aysha Mehra", "Thashreefa Ashraf C", "Leyha Mehvish", "Amana Fathima Shani"],
+            "2": ["Muhammed Faizan", "Muhammed shahzad", "Muhammed Shiyas", "Muhammed Zifran", "Abdul Wasih", "Muhammed Zahran AP", "Abdul Hadi P", "Salmanul Faris", "Ishan Ismayil", "Muhammed farhan", "Hina Rabbani C", "Thanza Haleema", "Fathima Shanza", "Shafna TP", "Jaisha Fathima", "Nafeesathul Misriya", "Naja Fathima K", "Fathima P", "Fathima Mehrish"],
+            "3": ["Muhammed Musthafa", "Muhammed Zuhair P", "AbdulRahman", "Hisham", "Nabhan CH", "Shaikha Fathima", "Namiya Shani", "Mehra Fathima", "Fathima P", "Fathima Shuhaib", "Fathima Zanha", "Filza Faisal", "Ridha TP", "Fathimathul Swaliha", "Kenza Fathima", "Raiha Mehrin"],
+            "4": ["Muhammed shahabas M", "Nasimhul Haque", "Muhammed K", "Muhammed Ashique M", "Muhammed Naseem MK", "Muhammed Zayan K", "Shazin PP", "Muhammed Adnan KA", "Zulfikhil", "Muhammed Adnan K", "Ameen Riyas PK", "Fathimathul Shazna PK", "Ayisha P", "Marwa Fathima P", "Minha Noushad KP", "Zoha Rosin"],
+            "6": ["Ameen", "Sinan CH", "Zayan Abdullah", "Muhammed Ziyan KM", "Muhammed Nasif", "Abdullah KM", "Fathima A", "Fathima Riza KP", "Jaziya CH", "Fathima Riya PK", "Fathima P", "Fathima Shadiya P", "Naja Fathima MK", "Rifa Sherin", "Najiya PP", "Fathima Zahra KV"],
+            "8": ["Muhammed Najis PP", "Muhammed Sinan P", "Muhammed Ifad C", "Muhammed Arshid S", "Muhammed Shadil PK", "Muhammed Shazin AP", "Shezin Muhammed TP", "Muhammed Faheem PM", "Muhammed Nadir Ali", "Shifa Sherin", "Fathima Raliya KT", "Naja Noushad", "Fathima P"],
+            "9": ["Muhammed Razi M", "Irshad CK", "Munaf P", "Fathima KA", "Ayishathul Thasni", "Zanha Fathima"],
+            "11": ["Riza Fathima CH"]
+        };
+
+        document.getElementById('resultForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const selectedClass = document.getElementById('classSelect').value;
+            const enteredCode = document.getElementById('madrasaCode').value.trim();
+            const errorText = document.getElementById('codeError');
+
+            const correctMadrasaCode = "6319";
+
+            if (enteredCode === correctMadrasaCode) {
+                errorText.style.display = 'none';
+
+                document.getElementById('displayClass').innerText = selectedClass;
+                document.getElementById('displayCode').innerText = enteredCode;
+
+                const tbody = document.getElementById('studentsBody');
+                tbody.innerHTML = ''; 
+
+                const classList = studentsData[selectedClass] || [];
+
+                if (classList.length > 0) {
+                    classList.forEach((studentName, index) => {
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = `
+                            <td>${index + 1}</td>
+                            <td>${studentName}</td>
+                        `;
+                        tbody.appendChild(tr);
+                    });
+                } else {
+                    tbody.innerHTML = `<tr><td colspan="2" style="text-align: center;">No students found for this class.</td></tr>`;
+                }
+
+                document.getElementById('search-section').style.display = 'none';
+                document.getElementById('result-section').style.display = 'block';
+                
+                // Scroll back to the top of the page when the result loads
+                window.scrollTo(0, 0); 
+            } else {
+                errorText.style.display = 'block';
+            }
+        });
+
+        function goBack() {
+            document.getElementById('madrasaCode').value = '';
+            document.getElementById('classSelect').selectedIndex = 0;
+            document.getElementById('codeError').style.display = 'none';
+
+            document.getElementById('result-section').style.display = 'none';
+            document.getElementById('search-section').style.display = 'block';
+        }
+    </script>
+
+</body>
+</html>
