@@ -10,8 +10,7 @@
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             background-color: #f4f7f6;
             margin: 0;
-            /* Added padding and changed alignment so long pages scroll normally */
-            padding: 40px 20px; 
+            padding: 30px 15px; /* Reduced outer padding for mobile */
             display: flex;
             justify-content: center;
             align-items: flex-start; 
@@ -21,23 +20,32 @@
 
         .container {
             background-color: #ffffff;
-            padding: 30px 40px;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            padding: 30px 20px; /* Reduced inner padding to give text more room */
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
             width: 100%;
             max-width: 450px;
             text-align: center;
+            box-sizing: border-box;
+        }
+
+        /* Further reduce padding on very small phones */
+        @media (max-width: 400px) {
+            .container {
+                padding: 25px 15px;
+            }
         }
 
         h2 {
             color: #2c3e50;
             margin-bottom: 5px;
+            font-size: 24px;
         }
 
         p.subtitle {
             color: #7f8c8d;
             font-size: 14px;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
         }
 
         .form-group {
@@ -50,33 +58,40 @@
             margin-bottom: 8px;
             color: #34495e;
             font-weight: bold;
+            font-size: 15px;
         }
 
         select, input[type="text"] {
             width: 100%;
-            padding: 10px;
+            padding: 12px 10px;
             border: 1px solid #bdc3c7;
-            border-radius: 5px;
+            border-radius: 6px;
             font-size: 16px;
             box-sizing: border-box;
+            background-color: #fcfcfc;
         }
 
-        /* Error message styling */
+        select:focus, input[type="text"]:focus {
+            outline: none;
+            border-color: #27ae60;
+            background-color: #fff;
+        }
+
         .error-text {
             color: #e74c3c;
             font-size: 13px;
-            margin-top: 5px;
-            display: none; /* Hidden by default */
+            margin-top: 6px;
+            display: none; 
             font-weight: bold;
         }
 
         button {
             width: 100%;
-            padding: 12px;
+            padding: 14px;
             background-color: #27ae60;
             color: white;
             border: none;
-            border-radius: 5px;
+            border-radius: 6px;
             font-size: 16px;
             font-weight: bold;
             cursor: pointer;
@@ -88,7 +103,6 @@
             background-color: #2ecc71;
         }
 
-        /* Styling for the Result Section (Hidden by default) */
         #result-section {
             display: none; 
         }
@@ -96,25 +110,22 @@
         .result-card {
             background-color: #ecf0f1;
             padding: 15px;
-            border-radius: 5px;
-            margin-bottom: 20px;
+            border-radius: 8px;
+            margin-bottom: 25px;
             text-align: left;
         }
 
         .result-info {
             display: flex;
             justify-content: space-between;
-            font-size: 14px;
-            margin-bottom: 15px;
+            font-size: 15px;
             color: #2c3e50;
         }
 
-        /* Natural Table Styling (No inner scrollbar) */
+        /* Clean List/Table Styling */
         .table-container {
-            border: 1px solid #bdc3c7;
-            border-radius: 5px;
-            background-color: #fff;
-            overflow: hidden; /* Keeps the rounded corners neat */
+            margin-top: 10px;
+            background-color: transparent; /* Removed the white box */
         }
 
         table {
@@ -123,20 +134,39 @@
         }
 
         th, td {
-            padding: 10px;
+            padding: 14px 10px; /* Taller rows for comfortable reading/tapping */
             text-align: left;
-            border-bottom: 1px solid #ecf0f1;
-            font-size: 14px;
+            border-bottom: 1px solid #e0e6ed; /* Gentle divider line instead of full borders */
+            font-size: 15px;
+            color: #2c3e50;
         }
 
         th {
-            background-color: #34495e;
-            color: white;
-            /* Removed the sticky positioning so it scrolls up naturally */
+            background-color: transparent;
+            color: #7f8c8d;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            border-bottom: 2px solid #bdc3c7;
+            padding-bottom: 10px;
         }
 
-        tr:nth-child(even) {
-            background-color: #f9f9f9; 
+        /* Make the Serial Number column very narrow */
+        th.sl-col, td.sl-col {
+            width: 40px;
+            text-align: center;
+            font-weight: bold;
+            color: #95a5a6;
+            padding-left: 2px;
+            padding-right: 5px;
+        }
+
+        td.name-col {
+            font-weight: 500;
+        }
+
+        tr:last-child td {
+            border-bottom: none; /* Remove line from the very last item */
         }
 
         .btn-back {
@@ -191,22 +221,22 @@
                     <span><strong>Class:</strong> <span id="displayClass"></span></span>
                     <span><strong>Code:</strong> <span id="displayCode"></span></span>
                 </div>
-                
-                <div class="table-container">
-                    <table>
-                        <thead>
-                            <tr>
-                                <th style="width: 20%;">Sl No.</th>
-                                <th>Student Name</th>
-                            </tr>
-                        </thead>
-                        <tbody id="studentsBody">
-                            </tbody>
-                    </table>
-                </div>
+            </div>
+            
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="sl-col">No.</th>
+                            <th>Student Name</th>
+                        </tr>
+                    </thead>
+                    <tbody id="studentsBody">
+                        </tbody>
+                </table>
             </div>
 
-            <button type="button" class="btn-back" onclick="goBack()">Search Again</button>
+            <button type="button" class="btn-back" style="margin-top: 25px;" onclick="goBack()">Search Again</button>
         </div>
 
     </div>
@@ -247,19 +277,18 @@
                     classList.forEach((studentName, index) => {
                         const tr = document.createElement('tr');
                         tr.innerHTML = `
-                            <td>${index + 1}</td>
-                            <td>${studentName}</td>
+                            <td class="sl-col">${index + 1}</td>
+                            <td class="name-col">${studentName}</td>
                         `;
                         tbody.appendChild(tr);
                     });
                 } else {
-                    tbody.innerHTML = `<tr><td colspan="2" style="text-align: center;">No students found for this class.</td></tr>`;
+                    tbody.innerHTML = `<tr><td colspan="2" style="text-align: center; padding: 20px;">No students found for this class.</td></tr>`;
                 }
 
                 document.getElementById('search-section').style.display = 'none';
                 document.getElementById('result-section').style.display = 'block';
                 
-                // Scroll back to the top of the page when the result loads
                 window.scrollTo(0, 0); 
             } else {
                 errorText.style.display = 'block';
