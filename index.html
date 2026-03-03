@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Noor Madrasa - Results Coming Soon</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            margin: 0; padding: 30px 15px;
+            display: flex; justify-content: center; align-items: center; 
+            min-height: 100vh; box-sizing: border-box;
+        }
+        .container {
+            background-color: #ffffff; padding: 40px 20px;
+            border-radius: 12px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            width: 100%; max-width: 450px; text-align: center;
+        }
+        h2 { color: #2c3e50; margin-bottom: 5px; font-size: 24px; }
+        p.subtitle { color: #7f8c8d; font-size: 15px; margin-bottom: 30px; }
+        
+        /* Timer Styling */
+        #timer-container {
+            display: flex; justify-content: center; gap: 10px; margin-bottom: 20px;
+        }
+        .time-box {
+            background-color: #2c3e50; color: white;
+            padding: 15px 10px; border-radius: 8px; width: 65px;
+        }
+        .time-box span { display: block; font-size: 24px; font-weight: bold; }
+        .time-box label { font-size: 12px; text-transform: uppercase; color: #bdc3c7; }
+        
+        .btn-live {
+            display: none; /* Hidden until timer ends */
+            width: 100%; padding: 15px; background-color: #27ae60; color: white;
+            border: none; border-radius: 6px; font-size: 18px; font-weight: bold;
+            cursor: pointer; text-decoration: none; transition: 0.3s;
+        }
+        .btn-live:hover { background-color: #2ecc71; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Noor Madrasa</h2>
+        <p class="subtitle">Annual Exam Result 2026</p>
+
+        <div id="countdown-section">
+            <h3 style="color: #e74c3c; margin-bottom: 20px;">Results Publishing In:</h3>
+            <div id="timer-container">
+                <div class="time-box"><span id="days">00</span><label>Days</label></div>
+                <div class="time-box"><span id="hours">00</span><label>Hours</label></div>
+                <div class="time-box"><span id="minutes">00</span><label>Min</label></div>
+                <div class="time-box"><span id="seconds">00</span><label>Sec</label></div>
+            </div>
+        </div>
+
+        <a href="search.html" id="live-button" class="btn-live">View Results Now</a>
+    </div>
+
+    <script>
+        // Set the target date and time (March 7, 2026, 07:30 AM)
+        const countDownDate = new Date("March 7, 2026 07:30:00").getTime();
+
+        const x = setInterval(function() {
+            const now = new Date().getTime();
+            const distance = countDownDate - now;
+
+            // Calculate time parts
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            // Display the results
+            document.getElementById("days").innerText = days < 10 ? "0" + days : days;
+            document.getElementById("hours").innerText = hours < 10 ? "0" + hours : hours;
+            document.getElementById("minutes").innerText = minutes < 10 ? "0" + minutes : minutes;
+            document.getElementById("seconds").innerText = seconds < 10 ? "0" + seconds : seconds;
+
+            // If the count down is over, hide the timer and show the button
+            if (distance < 0) {
+                clearInterval(x);
+                document.getElementById("countdown-section").style.display = "none";
+                document.getElementById("live-button").style.display = "block";
+            }
+        }, 1000);
+    </script>
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Passed Students - Noor Madrasa</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f6;
+            margin: 0; padding: 30px 15px; display: flex; justify-content: center; align-items: flex-start; 
+            min-height: 100vh; box-sizing: border-box;
+        }
+        .container {
+            background-color: #ffffff; padding: 30px 20px; border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); width: 100%; max-width: 450px; text-align: center;
+        }
+        h2 { color: #2c3e50; margin-bottom: 5px; font-size: 24px; }
+        p.subtitle { color: #7f8c8d; font-size: 14px; margin-bottom: 25px; }
+        .result-card { background-color: #ecf0f1; padding: 15px; border-radius: 8px; margin-bottom: 25px; text-align: left; }
+        .result-info { display: flex; justify-content: space-between; font-size: 15px; color: #2c3e50; }
+        
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
+        th, td { padding: 14px 10px; text-align: left; border-bottom: 1px solid #e0e6ed; font-size: 15px; color: #2c3e50; }
+        th { color: #7f8c8d; font-size: 13px; text-transform: uppercase; border-bottom: 2px solid #bdc3c7; padding-bottom: 10px; }
+        th.sl-col, td.sl-col { width: 40px; text-align: center; font-weight: bold; color: #95a5a6; padding-left: 2px; padding-right: 5px; }
+        td.name-col { font-weight: 500; }
+        tr:last-child td { border-bottom: none; }
+        
+        .btn-back {
+            display: inline-block; width: 100%; padding: 14px; background-color: #e74c3c; color: white; text-decoration: none;
+            border-radius: 6px; font-size: 16px; font-weight: bold; margin-top: 25px; box-sizing: border-box;
+        }
+        .btn-back:hover { background-color: #c0392b; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Passed Students List</h2>
+        <p class="subtitle">Academic Year 2026</p>
+
+        <div class="result-card">
+            <div class="result-info">
+                <span><strong>Class:</strong> <span id="displayClass"></span></span>
+                <span><strong>Code:</strong> 6319</span>
+            </div>
+        </div>
+        
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th class="sl-col">No.</th>
+                        <th>Student Name</th>
+                    </tr>
+                </thead>
+                <tbody id="studentsBody">
+                    </tbody>
+            </table>
+        </div>
+
+        <a href="search.html" class="btn-back">Search Again</a>
+    </div>
+
+    <script>
+        const studentsData = {
+            "1": ["Adam riyas KT", "Al ameen MM", "Al ameen KM", "Dhanish Musthafa", "Muhammed Shahid P", "Muhammed Jubair P", "Muhammed AP", "Misyan PC", "Salman P", "Mehsa Fathima PP", "Marsiya Fathima AK", "Fathima Salwa MK", "Aysha Mehra", "Thashreefa Ashraf C", "Leyha Mehvish", "Amana Fathima Shani"],
+            "2": ["Muhammed Faizan", "Muhammed shahzad", "Muhammed Shiyas", "Muhammed Zifran", "Abdul Wasih", "Muhammed Zahran AP", "Abdul Hadi P", "Salmanul Faris", "Ishan Ismayil", "Muhammed farhan", "Hina Rabbani C", "Thanza Haleema", "Fathima Shanza", "Shafna TP", "Jaisha Fathima", "Nafeesathul Misriya", "Naja Fathima K", "Fathima P", "Fathima Mehrish"],
+            "3": ["Muhammed Musthafa", "Muhammed Zuhair P", "AbdulRahman", "Hisham", "Nabhan CH", "Shaikha Fathima", "Namiya Shani", "Mehra Fathima", "Fathima P", "Fathima Shuhaib", "Fathima Zanha", "Filza Faisal", "Ridha TP", "Fathimathul Swaliha", "Kenza Fathima", "Raiha Mehrin"],
+            "4": ["Muhammed shahabas M", "Nasimhul Haque", "Muhammed K", "Muhammed Ashique M", "Muhammed Naseem MK", "Muhammed Zayan K", "Shazin PP", "Muhammed Adnan KA", "Zulfikhil", "Muhammed Adnan K", "Ameen Riyas PK", "Fathimathul Shazna PK", "Ayisha P", "Marwa Fathima P", "Minha Noushad KP", "Zoha Rosin"],
+            "6": ["Ameen", "Sinan CH", "Zayan Abdullah", "Muhammed Ziyan KM", "Muhammed Nasif", "Abdullah KM", "Fathima A", "Fathima Riza KP", "Jaziya CH", "Fathima Riya PK", "Fathima P", "Fathima Shadiya P", "Naja Fathima MK", "Rifa Sherin", "Najiya PP", "Fathima Zahra KV"],
+            "8": ["Muhammed Najis PP", "Muhammed Sinan P", "Muhammed Ifad C", "Muhammed Arshid S", "Muhammed Shadil PK", "Muhammed Shazin AP", "Shezin Muhammed TP", "Muhammed Faheem PM", "Muhammed Nadir Ali", "Shifa Sherin", "Fathima Raliya KT", "Naja Noushad", "Fathima P"],
+            "9": ["Muhammed Razi M", "Irshad CK", "Munaf P", "Fathima KA", "Ayishathul Thasni", "Zanha Fathima"],
+            "11": ["Riza Fathima CH"]
+        };
+
+        // Extract the class number from the URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const selectedClass = urlParams.get('class');
+        const code = urlParams.get('code');
+
+        // Security check: If they didn't come with the right code, send them back
+        if (code !== "6319") {
+            window.location.href = "search.html";
+        } else {
+            document.getElementById('displayClass').innerText = selectedClass;
+            const tbody = document.getElementById('studentsBody');
+            const classList = studentsData[selectedClass] || [];
+
+            if (classList.length > 0) {
+                classList.forEach((studentName, index) => {
+                    const tr = document.createElement('tr');
+                    tr.innerHTML = `<td class="sl-col">${index + 1}</td><td class="name-col">${studentName}</td>`;
+                    tbody.appendChild(tr);
+                });
+            } else {
+                tbody.innerHTML = `<tr><td colspan="2" style="text-align: center; padding: 20px;">No students found for this class.</td></tr>`;
+            }
+        }
+    </script>
+</body>
+</html>

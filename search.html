@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search - Noor Madrasa Result</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f6;
+            margin: 0; padding: 30px 15px; display: flex; justify-content: center; align-items: flex-start; 
+            min-height: 100vh; box-sizing: border-box;
+        }
+        .container {
+            background-color: #ffffff; padding: 30px 20px; border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); width: 100%; max-width: 450px; text-align: center;
+        }
+        h2 { color: #2c3e50; margin-bottom: 5px; font-size: 24px; }
+        p.subtitle { color: #7f8c8d; font-size: 14px; margin-bottom: 25px; }
+        .form-group { margin-bottom: 20px; text-align: left; }
+        label { display: block; margin-bottom: 8px; color: #34495e; font-weight: bold; font-size: 15px; }
+        select, input[type="text"] {
+            width: 100%; padding: 12px 10px; border: 1px solid #bdc3c7;
+            border-radius: 6px; font-size: 16px; box-sizing: border-box; background-color: #fcfcfc;
+        }
+        .error-text { color: #e74c3c; font-size: 13px; margin-top: 6px; display: none; font-weight: bold; }
+        button {
+            width: 100%; padding: 14px; background-color: #27ae60; color: white; border: none;
+            border-radius: 6px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 10px;
+        }
+        button:hover { background-color: #2ecc71; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Noor Madrasa</h2>
+        <p class="subtitle">Check Your Results</p>
+
+        <form id="resultForm">
+            <div class="form-group">
+                <label for="classSelect">Select Class:</label>
+                <select id="classSelect" required>
+                    <option value="" disabled selected>-- Choose Class --</option>
+                    <option value="1">Class 1</option>
+                    <option value="2">Class 2</option>
+                    <option value="3">Class 3</option>
+                    <option value="4">Class 4</option>
+                    <option value="6">Class 6</option>
+                    <option value="8">Class 8</option>
+                    <option value="9">Class 9</option>
+                    <option value="11">Class 11</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="madrasaCode">Madrasa Code:</label>
+                <input type="text" id="madrasaCode" placeholder="Enter Code" required>
+                <div id="codeError" class="error-text">Invalid Madrasa Code! Please try again.</div>
+            </div>
+            <button type="submit">View Result</button>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('resultForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const selectedClass = document.getElementById('classSelect').value;
+            const enteredCode = document.getElementById('madrasaCode').value.trim();
+            const errorText = document.getElementById('codeError');
+
+            if (enteredCode === "6319") {
+                // If code is correct, send the user to result.html with the class in the URL
+                window.location.href = `result.html?class=${selectedClass}&code=6319`;
+            } else {
+                errorText.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>
