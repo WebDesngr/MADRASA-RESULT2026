@@ -3,12 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Passed Students - Noor Madrasa</title>
+    <title>Exam Results - Noor Madrasa</title>
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f6;
-            margin: 0; padding: 30px 15px; display: flex; justify-content: center; align-items: flex-start; 
-            min-height: 100vh; box-sizing: border-box;
+            margin: 0; padding: 0; display: flex; flex-direction: column; min-height: 100vh;
+        }
+        .main-content-wrapper {
+            flex: 1; display: flex; justify-content: center; align-items: flex-start;
+            padding: 40px 15px; box-sizing: border-box;
         }
         .container {
             background-color: #ffffff; padding: 30px 20px; border-radius: 12px;
@@ -16,9 +19,27 @@
         }
         h2 { color: #2c3e50; margin-bottom: 5px; font-size: 24px; }
         p.subtitle { color: #7f8c8d; font-size: 14px; margin-bottom: 25px; }
-        .result-card { background-color: #ecf0f1; padding: 15px; border-radius: 8px; margin-bottom: 25px; text-align: left; }
+        .result-card { background-color: #ecf0f1; padding: 15px; border-radius: 8px; margin-bottom: 20px; text-align: left; }
         .result-info { display: flex; justify-content: space-between; font-size: 15px; color: #2c3e50; }
         
+        /* Attendance Card Styles */
+        .attendance-card {
+            background-color: #e8f8f5; border: 1px solid #1abc9c; border-radius: 8px;
+            padding: 15px; margin-bottom: 25px; text-align: center;
+        }
+        .attendance-card h3 { color: #16a085; margin: 0 0 10px 0; font-size: 18px; }
+        .total-days { color: #2c3e50; font-weight: bold; font-size: 15px; margin-bottom: 15px; background-color: #d1f2eb; padding: 5px; border-radius: 5px;}
+        .winners-container { display: flex; justify-content: space-between; gap: 10px; }
+        .winner-box { background-color: #ffffff; border-radius: 6px; padding: 10px; width: 48%; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .winner-box h4 { margin: 0 0 8px 0; font-size: 14px; color: #d35400; }
+        .winner-box p { margin: 0; font-size: 13px; color: #2c3e50; line-height: 1.5; font-weight: 500; }
+
+        /* New Heading Style for Passed Students */
+        .section-heading {
+            text-align: left; color: #2c3e50; font-size: 18px; margin: 0 0 10px 0;
+            border-bottom: 2px solid #27ae60; padding-bottom: 8px; font-weight: bold;
+        }
+
         table { width: 100%; border-collapse: collapse; margin-top: 10px; }
         th, td { padding: 14px 10px; text-align: left; border-bottom: 1px solid #e0e6ed; font-size: 15px; color: #2c3e50; }
         th { color: #7f8c8d; font-size: 13px; text-transform: uppercase; border-bottom: 2px solid #bdc3c7; padding-bottom: 10px; }
@@ -31,37 +52,67 @@
             border-radius: 6px; font-size: 16px; font-weight: bold; margin-top: 25px; box-sizing: border-box;
         }
         .btn-back:hover { background-color: #c0392b; }
+
+        .site-footer {
+            text-align: center; padding: 20px; color: #95a5a6; font-size: 13px;
+            border-top: 1px solid #e0e6ed; background-color: #ffffff; width: 100%; box-sizing: border-box;
+        }
+        .site-footer p { margin: 0; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h2>Passed Students List</h2>
-        <p class="subtitle">Academic Year 2026</p>
+    <div class="main-content-wrapper">
+        <div class="container">
+            <h2>Exam Results</h2>
+            <p class="subtitle">Academic Year 2026</p>
 
-        <div class="result-card">
-            <div class="result-info">
-                <span><strong>Class:</strong> <span id="displayClass"></span></span>
-                <span><strong>Code:</strong> 6319</span>
+            <div class="result-card">
+                <div class="result-info">
+                    <span><strong>Class:</strong> <span id="displayClass"></span></span>
+                    <span><strong>Code:</strong> 6319</span>
+                </div>
             </div>
-        </div>
-        
-        <div class="table-container">
-            <table>
-                <thead>
-                    <tr>
-                        <th class="sl-col">No.</th>
-                        <th>Student Name</th>
-                    </tr>
-                </thead>
-                <tbody id="studentsBody">
-                    </tbody>
-            </table>
-        </div>
 
-        <a href="search.html" class="btn-back">Search Again</a>
+            <div id="attendance-section" class="attendance-card" style="display: none;">
+                <h3>🏆 മികച്ച ഹാജർ നേടിയവർ</h3>
+                <div class="total-days">ആകെ പ്രവൃത്തി ദിനങ്ങൾ: <span id="displayTotalDays"></span></div>
+                <div class="winners-container">
+                    <div class="winner-box">
+                        <h4>🥇 ഒന്നാം സ്ഥാനം</h4>
+                        <p id="firstPlace"></p>
+                    </div>
+                    <div class="winner-box">
+                        <h4>🥈 രണ്ടാം സ്ഥാനം</h4>
+                        <p id="secondPlace"></p>
+                    </div>
+                </div>
+            </div>
+            
+            <h3 class="section-heading">Passed Students</h3>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="sl-col">No.</th>
+                            <th>Student Name</th>
+                        </tr>
+                    </thead>
+                    <tbody id="studentsBody">
+                        </tbody>
+                </table>
+            </div>
+
+            <a href="search.html" class="btn-back">Search Again</a>
+        </div>
     </div>
 
+    <footer class="site-footer">
+        <p>© 2026 Noor Madrasa Pulimparamba. All rights reserved.</p>
+    </footer>
+
     <script>
+        // Data for Passed Students
         const studentsData = {
             "1": ["Adam riyas KT", "Al ameen MM", "Al ameen KM", "Dhanish Musthafa", "Muhammed Shahid P", "Muhammed Jubair P", "Muhammed AP", "Misyan PC", "Salman P", "Mehsa Fathima PP", "Marsiya Fathima AK", "Fathima Salwa MK", "Aysha Mehra", "Thashreefa Ashraf C", "Leyha Mehvish", "Amana Fathima Shani"],
             "2": ["Muhammed Faizan", "Muhammed shahzad", "Muhammed Shiyas", "Muhammed Zifran", "Abdul Wasih", "Muhammed Zahran AP", "Abdul Hadi P", "Salmanul Faris", "Ishan Ismayil", "Muhammed farhan", "Hina Rabbani C", "Thanza Haleema", "Fathima Shanza", "Shafna TP", "Jaisha Fathima", "Nafeesathul Misriya", "Naja Fathima K", "Fathima P", "Fathima Mehrish"],
@@ -73,12 +124,21 @@
             "11": ["Riza Fathima CH"]
         };
 
-        // Extract the class number from the URL
+        // Data for Attendance Toppers
+        const attendanceData = {
+            "1": { total: "215", first: ["മർസിയ ഫാത്വിമ (215)", "തശ്‌രീഫ അഷ്‌റഫ്‌ (215)"], second: ["മുഹമ്മദ് ഷാഹിദ് (213)", "മുഹമ്മദ് അമ്രാൻ മാലിക് (213)"] },
+            "2": { total: "216", first: ["ഫാത്വിമ പി (216)"], second: ["ഫാത്വിമ ശൻസ (215)"] },
+            "3": { total: "224", first: ["മുഹമ്മദ് മുസ്ഥഫ (223)", "ഫാത്വിമ പി (223)"], second: ["മുഹമ്മദ് സുഹൈർ (222)", "അബ്ദുറഹ്മാൻ (222)", "മെഹ്റ ഫാത്വിമ (222)"] },
+            "4": { total: "224", first: ["മുഹമ്മദ് ആഷിഖ് (220)", "ശസിൻ (220)", "മർവ ഫാത്വിമ (220)"], second: ["റിശാൽ (219)"] },
+            "6": { total: "224", first: ["ഫാത്വിമ പി (222)"], second: ["സയാൻ അബ്ദുള്ള (221)"] },
+            "8": { total: "215", first: ["അർഷിദ് (198)"], second: ["മുഹമ്മദ് ശാസിൻ (197)"] },
+            "9": { total: "218", first: ["മുനാഫ് പി (216)"], second: ["ഇർഷാദ് സി കെ (211)"] }
+        };
+
         const urlParams = new URLSearchParams(window.location.search);
         const selectedClass = urlParams.get('class');
         const code = urlParams.get('code');
 
-        // Security check: If they didn't come with the right code, send them back
         if (code !== "6319") {
             window.location.href = "search.html";
         } else {
@@ -86,6 +146,16 @@
             const tbody = document.getElementById('studentsBody');
             const classList = studentsData[selectedClass] || [];
 
+            // Load Attendance Data if available for the selected class
+            const attData = attendanceData[selectedClass];
+            if (attData) {
+                document.getElementById('attendance-section').style.display = 'block';
+                document.getElementById('displayTotalDays').innerText = attData.total;
+                document.getElementById('firstPlace').innerHTML = attData.first.join('<br>');
+                document.getElementById('secondPlace').innerHTML = attData.second.join('<br>');
+            }
+
+            // Load Passed Students Table
             if (classList.length > 0) {
                 classList.forEach((studentName, index) => {
                     const tr = document.createElement('tr');
