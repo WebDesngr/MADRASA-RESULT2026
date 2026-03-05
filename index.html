@@ -5,54 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Noor Madrasa - Results Coming Soon</title>
     <style>
-        /* Reset and Base Styles */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f4f7f6;
-            margin: 0;
-            padding: 0; /* Removed padding so banner sits flush at top */
-            display: flex;
-            flex-direction: column; /* Stack elements vertically */
-            min-height: 100vh;
+            background-color: #f4f7f6; margin: 0; padding: 0; 
+            display: flex; flex-direction: column; min-height: 100vh;
         }
 
-        /* ==============================
-           TOP SCROLLING BANNER STYLES
-        ============================== */
-        .announcement-banner {
-            background-color: #c0392b; /* Deep Red color */
-            color: white;
-            padding: 12px 0;
-            width: 100%;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            z-index: 100;
-        }
-
-        .announcement-banner marquee {
-            font-size: 16px;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-        }
-
-        /* Wrapper to center the main content card vertically */
         .main-content-wrapper {
-            flex: 1; /* Takes up remaining space between banner and footer */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 30px 15px;
-            box-sizing: border-box;
+            flex: 1; display: flex; justify-content: center; align-items: center;
+            padding: 30px 15px; box-sizing: border-box;
         }
-
-        /* Main Card Styles (Same as before) */
         .container {
-            background-color: #ffffff;
-            padding: 40px 20px;
-            border-radius: 12px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-            width: 100%;
-            max-width: 450px;
-            text-align: center;
+            background-color: #ffffff; padding: 40px 20px; border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08); width: 100%; max-width: 450px; text-align: center;
         }
         h2 { color: #2c3e50; margin-bottom: 5px; font-size: 24px; }
         p.subtitle { color: #7f8c8d; font-size: 15px; margin-bottom: 30px; }
@@ -74,31 +39,15 @@
         }
         .btn-live:hover { background-color: #2ecc71; }
 
-        /* ==============================
-           BOTTOM FOOTER STYLES
-        ============================== */
+        /* Bottom Footer */
         .site-footer {
-            text-align: center;
-            padding: 20px;
-            color: #95a5a6;
-            font-size: 13px;
-            border-top: 1px solid #e0e6ed;
-            background-color: #ffffff;
-            width: 100%;
-            box-sizing: border-box;
+            text-align: center; padding: 20px; color: #95a5a6; font-size: 13px;
+            border-top: 1px solid #e0e6ed; background-color: #ffffff; width: 100%; box-sizing: border-box;
         }
-        .site-footer p {
-            margin: 0;
-        }
+        .site-footer p { margin: 0; }
     </style>
 </head>
 <body>
-
-    <div class="announcement-banner">
-        <marquee behavior="scroll" direction="left" scrollamount="6">
-            നൂർ മദ്‌റസ പുളിമ്പറമ്പ 2026 വാർഷിക പരീക്ഷാഫലം, 2026 മാർച്ച് 07 ശനിയാഴ്ച രാവിലെ 7.30 ലഭ്യമാകും
-        </marquee>
-    </div>
 
     <div class="main-content-wrapper">
         <div class="container">
@@ -108,10 +57,8 @@
             <div id="countdown-section">
                 <h3 style="color: #e74c3c; margin-bottom: 10px;">Results Publishing In:</h3>
                 
-                <div class="publish-date">
-                    Saturday, March 7, 2026 <br> at 07:30 AM
-                </div>
-
+                <div class="publish-date">Saturday, March 7, 2026 <br> at 06:00 AM</div>
+                
                 <div id="timer-container">
                     <div class="time-box"><span id="days">00</span><label>Days</label></div>
                     <div class="time-box"><span id="hours">00</span><label>Hours</label></div>
@@ -129,9 +76,8 @@
     </footer>
 
     <script>
-        // Set the target date and time (March 7, 2026, 07:30 AM)
-        // Ensure your computer clock is set correctly for this to show the right countdown!
-        const countDownDate = new Date("March 7, 2026 07:30:00").getTime();
+        // Updated Countdown Target
+        const countDownDate = new Date("March 7, 2026 06:00:00").getTime();
 
         const x = setInterval(function() {
             const now = new Date().getTime();
@@ -151,8 +97,6 @@
                 clearInterval(x);
                 document.getElementById("countdown-section").style.display = "none";
                 document.getElementById("live-button").style.display = "block";
-                // Optional: Hide banner when result is live
-                // document.querySelector('.announcement-banner').style.display = 'none';
             }
         }, 1000);
     </script>
