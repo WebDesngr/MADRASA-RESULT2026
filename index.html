@@ -24,7 +24,7 @@
         
         .publish-date {
             color: #34495e; font-size: 16px; font-weight: bold; margin-bottom: 20px;
-            background-color: #ecf0f1; padding: 10px; border-radius: 6px; display: inline-block;
+            background-color: #ffeaa7; padding: 10px; border-radius: 6px; display: inline-block;
         }
 
         #timer-container { display: flex; justify-content: center; gap: 10px; margin-bottom: 20px; }
@@ -39,7 +39,6 @@
         }
         .btn-live:hover { background-color: #2ecc71; }
 
-        /* Bottom Footer */
         .site-footer {
             text-align: center; padding: 20px; color: #95a5a6; font-size: 13px;
             border-top: 1px solid #e0e6ed; background-color: #ffffff; width: 100%; box-sizing: border-box;
@@ -57,7 +56,7 @@
             <div id="countdown-section">
                 <h3 style="color: #e74c3c; margin-bottom: 10px;">Results Publishing In:</h3>
                 
-                <div class="publish-date">Saturday, March 7, 2026 <br> at 06:00 AM</div>
+                <div class="publish-date">TEST MODE <br> (1 Minute Countdown)</div>
                 
                 <div id="timer-container">
                     <div class="time-box"><span id="days">00</span><label>Days</label></div>
@@ -76,8 +75,8 @@
     </footer>
 
     <script>
-        // Updated Countdown Target
-        const countDownDate = new Date("March 5, 2026 22:35:00").getTime();
+        // TEST TIMER: Always sets to exactly 1 minute (60,000 milliseconds) from page load
+        const countDownDate = new Date().getTime() + 60000;
 
         const x = setInterval(function() {
             const now = new Date().getTime();
@@ -102,5 +101,3 @@
     </script>
 </body>
 </html>
-
-
