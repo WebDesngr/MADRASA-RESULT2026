@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -22,19 +23,25 @@
         .result-card { background-color: #ecf0f1; padding: 15px; border-radius: 8px; margin-bottom: 20px; text-align: left; }
         .result-info { display: flex; justify-content: space-between; font-size: 15px; color: #2c3e50; }
         
-        /* Attendance Card Styles */
+        .topper-card {
+            background-color: #fdf2e9; border: 1px solid #f39c12; border-radius: 8px;
+            padding: 15px; margin-bottom: 20px; text-align: center;
+        }
+        .topper-card h3 { color: #d35400; margin: 0 0 10px 0; font-size: 18px; }
+        .total-marks { color: #2c3e50; font-weight: bold; font-size: 15px; margin-bottom: 15px; background-color: #fae5d3; padding: 5px; border-radius: 5px;}
+        
         .attendance-card {
             background-color: #e8f8f5; border: 1px solid #1abc9c; border-radius: 8px;
             padding: 15px; margin-bottom: 25px; text-align: center;
         }
         .attendance-card h3 { color: #16a085; margin: 0 0 10px 0; font-size: 18px; }
         .total-days { color: #2c3e50; font-weight: bold; font-size: 15px; margin-bottom: 15px; background-color: #d1f2eb; padding: 5px; border-radius: 5px;}
+        
         .winners-container { display: flex; justify-content: space-between; gap: 10px; }
         .winner-box { background-color: #ffffff; border-radius: 6px; padding: 10px; width: 48%; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        .winner-box h4 { margin: 0 0 8px 0; font-size: 14px; color: #d35400; }
+        .winner-box h4 { margin: 0 0 8px 0; font-size: 14px; color: #2980b9; }
         .winner-box p { margin: 0; font-size: 13px; color: #2c3e50; line-height: 1.5; font-weight: 500; }
 
-        /* New Heading Style for Passed Students */
         .section-heading {
             text-align: left; color: #2c3e50; font-size: 18px; margin: 0 0 10px 0;
             border-bottom: 2px solid #27ae60; padding-bottom: 8px; font-weight: bold;
@@ -73,23 +80,37 @@
                 </div>
             </div>
 
+            <div id="toppers-section" class="topper-card" style="display: none;">
+                <h3>🎓 പരീക്ഷാ വിജയികൾ</h3>
+                <div class="total-marks">ആകെ മാർക്ക്: <span id="displayTotalMarks"></span></div>
+                <div class="winners-container">
+                    <div class="winner-box" id="topperFirstBox">
+                        <h4 style="color: #d35400;">🥇 ഒന്നാം സ്ഥാനം</h4>
+                        <p id="topperFirstPlace"></p>
+                    </div>
+                    <div class="winner-box" id="topperSecondBox">
+                        <h4 style="color: #7f8c8d;">🥈 രണ്ടാം സ്ഥാനം</h4>
+                        <p id="topperSecondPlace"></p>
+                    </div>
+                </div>
+            </div>
+
             <div id="attendance-section" class="attendance-card" style="display: none;">
                 <h3>🏆 മികച്ച ഹാജർ നേടിയവർ</h3>
                 <div class="total-days">ആകെ പ്രവൃത്തി ദിനങ്ങൾ: <span id="displayTotalDays"></span></div>
                 <div class="winners-container">
-                    <div class="winner-box">
-                        <h4>🥇 ഒന്നാം സ്ഥാനം</h4>
-                        <p id="firstPlace"></p>
+                    <div class="winner-box" id="attFirstBox">
+                        <h4 style="color: #d35400;">🥇 ഒന്നാം സ്ഥാനം</h4>
+                        <p id="attFirstPlace"></p>
                     </div>
-                    <div class="winner-box">
-                        <h4>🥈 രണ്ടാം സ്ഥാനം</h4>
-                        <p id="secondPlace"></p>
+                    <div class="winner-box" id="attSecondBox">
+                        <h4 style="color: #7f8c8d;">🥈 രണ്ടാം സ്ഥാനം</h4>
+                        <p id="attSecondPlace"></p>
                     </div>
                 </div>
             </div>
             
             <h3 class="section-heading">Passed Students</h3>
-
             <div class="table-container">
                 <table>
                     <thead>
@@ -112,7 +133,6 @@
     </footer>
 
     <script>
-        // Data for Passed Students
         const studentsData = {
             "1": ["Adam riyas KT", "Al ameen MM", "Al ameen KM", "Dhanish Musthafa", "Muhammed Shahid P", "Muhammed Jubair P", "Muhammed AP", "Misyan PC", "Salman P", "Mehsa Fathima PP", "Marsiya Fathima AK", "Fathima Salwa MK", "Aysha Mehra", "Thashreefa Ashraf C", "Leyha Mehvish", "Amana Fathima Shani"],
             "2": ["Muhammed Faizan", "Muhammed shahzad", "Muhammed Shiyas", "Muhammed Zifran", "Abdul Wasih", "Muhammed Zahran AP", "Abdul Hadi P", "Salmanul Faris", "Ishan Ismayil", "Muhammed farhan", "Hina Rabbani C", "Thanza Haleema", "Fathima Shanza", "Shafna TP", "Jaisha Fathima", "Nafeesathul Misriya", "Naja Fathima K", "Fathima P", "Fathima Mehrish"],
@@ -124,7 +144,17 @@
             "11": ["Riza Fathima CH"]
         };
 
-        // Data for Attendance Toppers
+        const toppersData = {
+            "1": { total: "300", first: ["മർസിയ ഫാത്തിമ Ak (295)"], second: ["ലൈഹ മെഹ് വിഷ് (292)"] },
+            "2": { total: "300", first: ["ഫാത്തിമ.പി (300)", "ഇഷാൻ ഇസ്മായിൽ (300)"], second: ["അബ്ദുൽ വാസിഹ് (295)"] },
+            "3": { total: "350", first: ["അബ്ദുറഹ്മാൻ (343)"], second: ["ഫിൽസ ഫൈസൽ (337)"] },
+            "4": { total: "350", first: ["ഫാത്തിമ ശസ്‌ന pk (314)"], second: ["നാസിമുൽ ഹഖ് .കെ (274)"] },
+            "6": { total: "300", first: ["മുഹമ്മദ് സയാൻ കെ എം (255)"], second: ["ഫാത്വിമ റിയ പി കെ (246)"] },
+            "8": { total: "200", first: ["ഫാത്വിമ P (167)"], second: ["നജ നൗഷാദ് (126)"] },
+            "9": { total: "200", first: ["സൻഹ ഫാത്തിമ കെ എം (136)"], second: ["ഇർഷാദ് സി കെ (118)"] },
+            "11": { total: "200", first: ["റിസ ഫാത്വിമ സി എച്ച് (90)"], second: [] }
+        };
+
         const attendanceData = {
             "1": { total: "215", first: ["മർസിയ ഫാത്വിമ (215)", "തശ്‌രീഫ അഷ്‌റഫ്‌ (215)"], second: ["മുഹമ്മദ് ഷാഹിദ് (213)", "മുഹമ്മദ് അമ്രാൻ മാലിക് (213)"] },
             "2": { total: "216", first: ["ഫാത്വിമ പി (216)"], second: ["ഫാത്വിമ ശൻസ (215)"] },
@@ -144,18 +174,39 @@
         } else {
             document.getElementById('displayClass').innerText = selectedClass;
             const tbody = document.getElementById('studentsBody');
-            const classList = studentsData[selectedClass] || [];
+            
+            const topData = toppersData[selectedClass];
+            if (topData) {
+                document.getElementById('toppers-section').style.display = 'block';
+                document.getElementById('displayTotalMarks').innerText = topData.total;
+                
+                if (topData.first.length > 0) {
+                    document.getElementById('topperFirstPlace').innerHTML = topData.first.join('<br>');
+                } else {
+                    document.getElementById('topperFirstBox').style.display = 'none';
+                }
 
-            // Load Attendance Data if available for the selected class
+                if (topData.second.length > 0) {
+                    document.getElementById('topperSecondPlace').innerHTML = topData.second.join('<br>');
+                } else {
+                    document.getElementById('topperSecondBox').style.display = 'none'; 
+                }
+            }
+
             const attData = attendanceData[selectedClass];
             if (attData) {
                 document.getElementById('attendance-section').style.display = 'block';
                 document.getElementById('displayTotalDays').innerText = attData.total;
-                document.getElementById('firstPlace').innerHTML = attData.first.join('<br>');
-                document.getElementById('secondPlace').innerHTML = attData.second.join('<br>');
+                
+                if (attData.first && attData.first.length > 0) {
+                    document.getElementById('attFirstPlace').innerHTML = attData.first.join('<br>');
+                }
+                if (attData.second && attData.second.length > 0) {
+                    document.getElementById('attSecondPlace').innerHTML = attData.second.join('<br>');
+                }
             }
 
-            // Load Passed Students Table
+            const classList = studentsData[selectedClass] || [];
             if (classList.length > 0) {
                 classList.forEach((studentName, index) => {
                     const tr = document.createElement('tr');
