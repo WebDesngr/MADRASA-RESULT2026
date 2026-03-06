@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,8 +8,11 @@
     <style>
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f7f6;
-            margin: 0; padding: 30px 15px; display: flex; justify-content: center; align-items: flex-start; 
-            min-height: 100vh; box-sizing: border-box;
+            margin: 0; padding: 0; display: flex; flex-direction: column; min-height: 100vh;
+        }
+        .main-content-wrapper {
+            flex: 1; display: flex; justify-content: center; align-items: flex-start;
+            padding: 50px 15px; box-sizing: border-box;
         }
         .container {
             background-color: #ffffff; padding: 30px 20px; border-radius: 12px;
@@ -22,54 +26,83 @@
             width: 100%; padding: 12px 10px; border: 1px solid #bdc3c7;
             border-radius: 6px; font-size: 16px; box-sizing: border-box; background-color: #fcfcfc;
         }
-        .error-text { color: #e74c3c; font-size: 13px; margin-top: 6px; display: none; font-weight: bold; }
+        .error-text { 
+            color: #e74c3c; font-size: 14px; margin-top: 10px; display: none; 
+            font-weight: bold; background-color: #fadbd8; padding: 10px; 
+            border-radius: 6px; text-align: center; border: 1px solid #e74c3c;
+        }
         button {
             width: 100%; padding: 14px; background-color: #27ae60; color: white; border: none;
             border-radius: 6px; font-size: 16px; font-weight: bold; cursor: pointer; margin-top: 10px;
         }
         button:hover { background-color: #2ecc71; }
+        
+        .site-footer {
+            text-align: center; padding: 20px; color: #95a5a6; font-size: 13px;
+            border-top: 1px solid #e0e6ed; background-color: #ffffff; width: 100%; box-sizing: border-box;
+        }
+        .site-footer p { margin: 0; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h2>Noor Madrasa</h2>
-        <p class="subtitle">Check Your Results</p>
+    <div class="main-content-wrapper">
+        <div class="container">
+            <h2>Noor Madrasa</h2>
+            <p class="subtitle">Check Your Results</p>
 
-        <form id="resultForm">
-            <div class="form-group">
-                <label for="classSelect">Select Class:</label>
-                <select id="classSelect" required>
-                    <option value="" disabled selected>-- Choose Class --</option>
-                    <option value="1">Class 1</option>
-                    <option value="2">Class 2</option>
-                    <option value="3">Class 3</option>
-                    <option value="4">Class 4</option>
-                    <option value="6">Class 6</option>
-                    <option value="8">Class 8</option>
-                    <option value="9">Class 9</option>
-                    <option value="11">Class 11</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="madrasaCode">Madrasa Code:</label>
-                <input type="text" id="madrasaCode" placeholder="Enter Code" required>
-                <div id="codeError" class="error-text">Invalid Madrasa Code! Please try again.</div>
-            </div>
-            <button type="submit">View Result</button>
-        </form>
+            <form id="resultForm">
+                <div class="form-group">
+                    <label for="classSelect">Select Class:</label>
+                    <select id="classSelect" required>
+                        <option value="" disabled selected>-- Choose Class --</option>
+                        <option value="1">Class 1</option>
+                        <option value="2">Class 2</option>
+                        <option value="3">Class 3</option>
+                        <option value="4">Class 4</option>
+                        <option value="6">Class 6</option>
+                        <option value="8">Class 8</option>
+                        <option value="9">Class 9</option>
+                        <option value="11">Class 11</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="madrasaCode">Madrasa Code:</label>
+                    <input type="text" id="madrasaCode" placeholder="Enter Code" required>
+                    <div id="codeError" class="error-text">Invalid Madrasa Code! Please try again.</div>
+                </div>
+                <button type="submit">View Result</button>
+            </form>
+        </div>
     </div>
 
+    <footer class="site-footer">
+        <p>© 2026 Noor Madrasa Pulimparamba. All rights reserved.</p>
+    </footer>
+
     <script>
+        // ==========================================
+        // 🔒 INAUGURATION MASTER SWITCH 🔒
+        // To unlock the results after the inauguration,
+        // change the word 'false' below to 'true'.
+        // ==========================================
+        const resultsAreInaugurated = false; 
+
         document.getElementById('resultForm').addEventListener('submit', function(event) {
             event.preventDefault();
             const selectedClass = document.getElementById('classSelect').value;
             const enteredCode = document.getElementById('madrasaCode').value.trim();
             const errorText = document.getElementById('codeError');
 
+            if (resultsAreInaugurated === false) {
+                errorText.innerText = "⏳ഉദ്ഘാടനത്തിന് ശേഷം റിസൾട്ട് ലഭ്യമാകും !";
+                errorText.style.display = 'block';
+                return; 
+            }
+
             if (enteredCode === "6319") {
-                // If code is correct, send the user to result.html with the class in the URL
                 window.location.href = `result.html?class=${selectedClass}&code=6319`;
             } else {
+                errorText.innerText = "❌ Invalid Madrasa Code! Please try again.";
                 errorText.style.display = 'block';
             }
         });
